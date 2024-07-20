@@ -304,7 +304,7 @@ public partial class PackageManagerViewModel : ObservableObject
             ProgressText = $"Updating {SelectedPackage.DisplayName} to latest version... {percent:N0}%";
             EventManager.Instance.OnGlobalProgressChanged(percent);
         });
-        var updateResult = await package.Update(SelectedPackage, progress);
+        var updateResult = await package.Update(SelectedPackage, progress, DownloadPackageVersionOptions.);
         
         ProgressText = "Update complete";
         SelectedPackage.UpdateAvailable = false;

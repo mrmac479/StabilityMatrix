@@ -86,7 +86,7 @@ public partial class UpdateWindowViewModel : ObservableObject
         UpdateText = "Update complete. Restarting Stability Matrix in 1 second...";
         await Task.Delay(1000);
 
-        Process.Start(UpdateHelper.ExecutablePath);
+        Process.Start(UpdateHelper.ExecutablePath.ToString());
         Application.Current.Shutdown();
     }
 }

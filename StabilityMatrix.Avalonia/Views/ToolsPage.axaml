@@ -1,0 +1,25 @@
+<controls:UserControlBase
+    x:Class="StabilityMatrix.Avalonia.Views.ToolsPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:StabilityMatrix.Avalonia.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mocks="clr-namespace:StabilityMatrix.Avalonia.DesignData"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="clr-namespace:StabilityMatrix.Avalonia.ViewModels"
+    xmlns:vmBase="clr-namespace:StabilityMatrix.Avalonia.ViewModels.Base"
+    xmlns:local="clr-namespace:StabilityMatrix.Avalonia"
+    Focusable="True"
+    d:DataContext="{x:Static mocks:DesignData.ToolsViewModel}"
+    d:DesignHeight="700"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:ToolsViewModel"
+    mc:Ignorable="d">
+
+	<TabControl ItemsSource="{Binding Pages}"
+                SelectedItem="{Binding SelectedPage}"/>
+
+
+</controls:UserControlBase>

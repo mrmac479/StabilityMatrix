@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using AsyncAwaitBestPractices;
 using NLog;
 using StabilityMatrix.Core.Attributes;
@@ -667,5 +668,76 @@ public class SettingsManager : ISettingsManager
             },
             CancellationToken.None
         );
+    }
+
+    public string? GetActivePackageHost()
+    {
+        var package = Settings.InstalledPackages.FirstOrDefault(
+            x => x.Id == Settings.ActiveInstalledPackageId
+        );
+        if (package == null)
+            return null;
+        var hostOption = package.LaunchArgs?.FirstOrDefault(x => x.Name.ToLowerInvariant() == "host");
+        if (hostOption?.OptionValue != null)
+        {
+            return hostOption.OptionValue as string;
+        }
+        return hostOption?.DefaultValue as string;
+    }
+
+    public string? GetActivePackagePort()
+    {
+        var package = Settings.InstalledPackages.FirstOrDefault(
+            x => x.Id == Settings.ActiveInstalledPackageId
+        );
+        if (package == null)
+            return null;
+        var portOption = package.LaunchArgs?.FirstOrDefault(x => x.Name.ToLowerInvariant() == "port");
+        if (portOption?.OptionValue != null)
+        {
+            return portOption.OptionValue as string;
+        }
+        return portOption?.DefaultValue as string;
+    }
+
+    /// <summary>
+    /// Iterable of installed packages using the old absolute path format.
+    /// Can be called with Any() to check if the user needs to migrate.
+    /// </summary>
+    public IEnumerable<InstalledPackage> GetOldInstalledPackages()
+    {
+        var oldSettingsPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "StabilityMatrix",
+            "settings.json"
+        );
+        if (!File.Exists(oldSettingsPath))
+            yield break;
+        var oldSettingsJson = File.ReadAllText(oldSettingsPath);
+        var oldSettings = JsonSerializer.Deserialize<Settings>(
+            oldSettingsJson,
+            new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } }
+        );
+        // Absolute paths are old formats requiring migration
+#pragma warning disable CS0618
+        var oldPackages = oldSettings?.InstalledPackages.Where(package => package.Path != null);
+#pragma warning restore CS0618
+        if (oldPackages == null)
+            yield break;
+        foreach (var package in oldPackages)
+        {
+            yield return package;
+        }
+    }
+
+    public void UpdatePackageVersionNumber(Guid id, InstalledPackageVersion? newVersion)
+    {
+        var package = Settings.InstalledPackages.FirstOrDefault(x => x.Id == id);
+        if (package == null || newVersion == null)
+        {
+            return;
+        }
+        package.Version = newVersion;
+        SaveSettings();
     }
 }

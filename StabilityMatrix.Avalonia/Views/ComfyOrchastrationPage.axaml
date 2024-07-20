@@ -1,0 +1,66 @@
+﻿<controls:UserControlBase xmlns="https://github.com/avaloniaui"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                          xmlns:controls="clr-namespace:StabilityMatrix.Avalonia.Controls"
+                          xmlns:avalonia="https://github.com/projektanker/icons.avalonia"
+                          xmlns:input="clr-namespace:FluentAvalonia.UI.Input;assembly=FluentAvalonia"
+                          xmlns:viewModels="clr-namespace:StabilityMatrix.Avalonia.ViewModels"
+                          x:DataType="viewModels:ComfyOrchastrationViewModel"
+                          mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                          x:Class="StabilityMatrix.Avalonia.Views.ComfyOrchastrationPage">
+	<controls:UserControlBase.Resources>
+		<!--Direction="0"
+            ShadowDepth="0"-->
+		<DropShadowEffect
+            BlurRadius="8"
+            Color="#FF000000"
+            Opacity="0.2"
+            x:Key="TextDropShadowEffect" />
+	</controls:UserControlBase.Resources>
+	<StackPanel Margin="10">
+		<Grid Name="FilesGrid"
+                          Background="Transparent"
+                          DragDrop.AllowDrop="True">
+			<TextBlock VerticalAlignment="Center"
+					   TextAlignment="Center"
+					   HorizontalAlignment="Center"
+					   Margin="8,8,8,16"
+					   Text="Drop Directory Here" />
+			<!-- Blurred background for drag and drop -->
+			<Border
+				CornerRadius="4"
+				IsEnabled="False"
+				IsVisible="{Binding IsDragBlurEnabled}">
+				<Border.Background>
+					<SolidColorBrush Color="#EE202020" />
+				</Border.Background>
+			</Border>
+			<!-- Drag prompt text -->
+			<TextBlock
+				Effect="{StaticResource TextDropShadowEffect}"
+				FontSize="24"
+				HorizontalAlignment="Center"
+				Text="Drag Directory"
+				VerticalAlignment="Center"
+				IsVisible="{Binding IsCurrentDragTarget}" />
+		</Grid>
+		<TextBox Text="{Binding FilePath, Mode=TwoWay}" Margin="0 0 0 10"/>
+		<TextBox Text="{Binding Prefix}" Watermark="Enter prefix" Margin="0 0 0 10"/>
+		<TextBox Text="{Binding SkipFileCount}" Watermark="Enter files to skip" Margin="0 0 0 10"/>
+		<CheckBox IsChecked="{Binding SoftTouch}" Content="Soft Touch" Margin="0 0 0 10"/>
+		<StackPanel Orientation="Horizontal">
+			<Button Content="Execute" Command="{Binding ExecuteCommand}" HorizontalAlignment="Center"/>
+
+			<controls:ProgressRing
+								   IsVisible="{Binding  IsLoading}"
+								   IsIndeterminate="True"
+								   Width="16"
+								   Height="16"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<Image Source="{Binding PreviewImage}" Width="800" />
+		</StackPanel>
+		
+	</StackPanel>
+</controls:UserControlBase>

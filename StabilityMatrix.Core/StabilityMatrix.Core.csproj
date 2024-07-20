@@ -39,10 +39,11 @@
       <PackageReference Include="MetadataExtractor" Version="2.8.1" />
       <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="NLog" Version="5.2.8" />
       <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
       <PackageReference Include="NSec.Cryptography" Version="22.4.0" />
-      <PackageReference Include="Octokit" Version="10.0.0" />
+      <PackageReference Include="Octokit" Version="11.0.1" />
       <PackageReference Include="OneOf" Version="3.0.263" />
       <PackageReference Include="OneOf.SourceGenerator" Version="3.0.263" />
       <PackageReference Include="Polly" Version="8.3.0" />

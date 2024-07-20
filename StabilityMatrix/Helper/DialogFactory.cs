@@ -27,14 +27,17 @@ public class DialogFactory : IDialogFactory
     private readonly InstallerWindowDialogService installerWindowDialogService;
     private readonly ISettingsManager settingsManager;
 
-    public DialogFactory(IContentDialogService contentDialogService,
+    public DialogFactory(
+        IContentDialogService contentDialogService,
         LaunchOptionsDialogViewModel launchOptionsDialogViewModel,
-        ISettingsManager settingsManager, InstallerViewModel installerViewModel,
+        ISettingsManager settingsManager,
+        InstallerViewModel installerViewModel,
         OneClickInstallViewModel oneClickInstallViewModel,
         SelectInstallLocationsViewModel selectInstallLocationsViewModel,
         DataDirectoryMigrationViewModel dataDirectoryMigrationViewModel,
         InstallerWindowDialogService installerWindowDialogService,
-        WebLoginViewModel webLoginViewModel)
+        WebLoginViewModel webLoginViewModel
+    )
     {
         this.contentDialogService = contentDialogService;
         this.launchOptionsDialogViewModel = launchOptionsDialogViewModel;
@@ -47,11 +50,18 @@ public class DialogFactory : IDialogFactory
         this.settingsManager = settingsManager;
     }
 
-    public LaunchOptionsDialog CreateLaunchOptionsDialog(IEnumerable<LaunchOptionDefinition> definitions, InstalledPackage installedPackage)
+    public LaunchOptionsDialog CreateLaunchOptionsDialog(
+        IEnumerable<LaunchOptionDefinition> definitions,
+        InstalledPackage installedPackage
+    )
     {
         // Load user settings
-        var userLaunchArgs = settingsManager.GetLaunchArgs(installedPackage.Id);
-        launchOptionsDialogViewModel.Initialize(definitions, userLaunchArgs);
+        //var userLaunchArgs = settingsManager.GetLaunchArgs(installedPackage.Id);
+        //launchOptionsDialogViewModel.Initialize(definitions, userLaunchArgs);
+        launchOptionsDialogViewModel.Initialize(
+            definitions,
+            settingsManager.Settings.ActiveInstalledPackage.LaunchArgs
+        );
         return new LaunchOptionsDialog(contentDialogService, launchOptionsDialogViewModel);
     }
 
@@ -61,10 +71,12 @@ public class DialogFactory : IDialogFactory
     /// If cancel is pressed, return null.
     /// <param name="fields">List of (fieldName, placeholder)</param>
     /// </summary>
-    public async Task<List<string>?> ShowTextEntryDialog(string title,
+    public async Task<List<string>?> ShowTextEntryDialog(
+        string title,
         IEnumerable<(string, string)> fields,
         string closeButtonText = "Cancel",
-        string saveButtonText = "Save")
+        string saveButtonText = "Save"
+    )
     {
         var dialog = contentDialogService.CreateDialog();
         dialog.Title = title;
@@ -86,22 +98,20 @@ public class DialogFactory : IDialogFactory
                 MinWidth = 200,
             };
             textBoxes.Add(textBox);
-            stackPanel.Children.Add(new Card
-            {
-                Content = new StackPanel
+            stackPanel.Children.Add(
+                new Card
                 {
-                    Children =
+                    Content = new StackPanel
                     {
-                        new TextBlock
+                        Children =
                         {
-                            Text = fieldName,
-                            Margin = new Thickness(0, 0, 0, 4)
-                        },
-                        textBox
-                    }
-                },
-                Margin = new Thickness(16)
-            });
+                            new TextBlock { Text = fieldName, Margin = new Thickness(0, 0, 0, 4) },
+                            textBox
+                        }
+                    },
+                    Margin = new Thickness(16)
+                }
+            );
         }
 
         var result = await dialog.ShowAsync();
@@ -116,7 +126,12 @@ public class DialogFactory : IDialogFactory
     /// Creates and shows a confirmation dialog.
     /// Return true if the user clicks the primary button.
     /// </summary>
-    public async Task<bool> ShowConfirmationDialog(string title, string message, string closeButtonText = "Cancel", string primaryButtonText = "Confirm")
+    public async Task<bool> ShowConfirmationDialog(
+        string title,
+        string message,
+        string closeButtonText = "Cancel",
+        string primaryButtonText = "Confirm"
+    )
     {
         var dialog = contentDialogService.CreateDialog();
         dialog.Title = title;
@@ -124,11 +139,7 @@ public class DialogFactory : IDialogFactory
         dialog.CloseButtonText = closeButtonText;
         dialog.PrimaryButtonText = primaryButtonText;
         dialog.IsPrimaryButtonEnabled = true;
-        dialog.Content = new TextBlock
-        {
-            Text = message,
-            Margin = new Thickness(16)
-        };
+        dialog.Content = new TextBlock { Text = message, Margin = new Thickness(16) };
         var result = await dialog.ShowAsync();
         return result == ContentDialogResult.Primary;
     }
@@ -145,8 +156,7 @@ public class DialogFactory : IDialogFactory
 
     public SelectInstallLocationsDialog CreateInstallLocationsDialog()
     {
-        var dialog = new SelectInstallLocationsDialog(contentDialogService,
-            selectInstallLocationsViewModel)
+        var dialog = new SelectInstallLocationsDialog(contentDialogService, selectInstallLocationsViewModel)
         {
             IsPrimaryButtonEnabled = false,
             IsSecondaryButtonEnabled = false,
@@ -157,8 +167,7 @@ public class DialogFactory : IDialogFactory
 
     public DataDirectoryMigrationDialog CreateDataDirectoryMigrationDialog()
     {
-        var dialog = new DataDirectoryMigrationDialog(contentDialogService,
-            dataDirectoryMigrationViewModel)
+        var dialog = new DataDirectoryMigrationDialog(contentDialogService, dataDirectoryMigrationViewModel)
         {
             IsPrimaryButtonEnabled = false,
             IsSecondaryButtonEnabled = false,
@@ -169,16 +178,15 @@ public class DialogFactory : IDialogFactory
 
     public WebLoginDialog CreateWebLoginDialog()
     {
-        return new WebLoginDialog(contentDialogService, webLoginViewModel)
-        {
-            CloseButtonText = "Cancel",
-        };
+        return new WebLoginDialog(contentDialogService, webLoginViewModel) { CloseButtonText = "Cancel", };
     }
-    
+
     public SelectModelVersionDialog CreateSelectModelVersionDialog(CivitModel model)
     {
-        return new SelectModelVersionDialog(contentDialogService,
-            new SelectModelVersionDialogViewModel(model, settingsManager))
+        return new SelectModelVersionDialog(
+            contentDialogService,
+            new SelectModelVersionDialogViewModel(model, settingsManager)
+        )
         {
             IsPrimaryButtonEnabled = false,
             IsSecondaryButtonEnabled = false,

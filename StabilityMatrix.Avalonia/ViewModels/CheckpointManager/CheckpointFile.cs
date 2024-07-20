@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
+using StabilityMatrix.Avalonia.Helpers;
 using StabilityMatrix.Avalonia.ViewModels.Base;
 using StabilityMatrix.Core.Attributes;
 using StabilityMatrix.Core.Extensions;
@@ -91,7 +92,7 @@ public partial class CheckpointFile : ViewModelBase
         Title = value?.UserTitle ?? value?.ModelName ?? string.Empty;
         // Update badges
         Badges.Clear();
-        var fpType = value?.FileMetadata.Fp?.GetStringValue().ToUpperInvariant();
+        var fpType = value?.FileMetadata?.Fp?.GetStringValue().ToUpperInvariant();
         if (fpType != null)
         {
             Badges.Add(fpType);
@@ -330,6 +331,15 @@ public partial class CheckpointFile : ViewModelBase
             };
 
             var jsonPath = Path.Combine(directory, $"{Path.GetFileNameWithoutExtension(file)}.cm-info.json");
+
+            /*
+            if (!File.Exists(jsonPath))
+            {
+                jsonPath = Path.Combine(directory, $"{Path.GetFileNameWithoutExtension(file)}.json");
+            }
+            */
+
+
             if (File.Exists(jsonPath))
             {
                 var json = File.ReadAllText(jsonPath);
@@ -343,6 +353,19 @@ public partial class CheckpointFile : ViewModelBase
                     checkpointFile.ConnectedModel = null;
                 }
             }
+            else
+            {
+                try
+                {
+                    checkpointFile.ConnectedModel = SafeTensorsParser.ParseSafeTensorsMetadataAndReturnCMData(
+                        checkpointFile.filePath
+                    );
+                }
+                catch (Exception)
+                {
+                    checkpointFile.ConnectedModel = null;
+                }
+            }
 
             checkpointFile.PreviewImagePath = SupportedImageExtensions
                 .Select(
@@ -350,6 +373,14 @@ public partial class CheckpointFile : ViewModelBase
                 )
                 .Where(File.Exists)
                 .FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(checkpointFile.PreviewImagePath))
+            {
+                checkpointFile.PreviewImagePath = SupportedImageExtensions
+                    .Select(ext => Path.Combine(directory, $"{Path.GetFileNameWithoutExtension(file)}{ext}"))
+                    .Where(File.Exists)
+                    .FirstOrDefault();
+            }
 
             if (string.IsNullOrWhiteSpace(checkpointFile.PreviewImagePath))
             {
@@ -474,7 +505,7 @@ public partial class CheckpointFile : ViewModelBase
             if (x.GetType() != y.GetType())
                 return false;
             return x.FilePath == y.FilePath
-                && x.ConnectedModel?.Hashes.BLAKE3 == y.ConnectedModel?.Hashes.BLAKE3
+                && x.ConnectedModel?.Hashes?.BLAKE3 == y.ConnectedModel?.Hashes?.BLAKE3
                 && x.ConnectedModel?.ThumbnailImageUrl == y.ConnectedModel?.ThumbnailImageUrl
                 && x.PreviewImagePath == y.PreviewImagePath;
         }

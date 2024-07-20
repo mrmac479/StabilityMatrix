@@ -112,4 +112,8 @@ public interface ISettingsManager
     bool IsEulaAccepted();
     void SetEulaAccepted();
     void IndexCheckpoints();
+    string? GetActivePackageHost();
+    string? GetActivePackagePort();
+    IEnumerable<InstalledPackage> GetOldInstalledPackages();
+    void UpdatePackageVersionNumber(Guid id, InstalledPackageVersion? newVersion);
 }

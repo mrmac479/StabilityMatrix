@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StabilityMatrix", "StabilityMatrix\StabilityMatrix.csproj", "{7CA2E862-B121-495D-8CCC-2D6EF56A3312}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StabilityMatrix.Tests", "StabilityMatrix.Tests\StabilityMatrix.Tests.csproj", "{63EF4330-CCFF-4677-B14C-1A700CD81FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StabilityMatrix.Tests", "StabilityMatrix.Tests\StabilityMatrix.Tests.csproj", "{63EF4330-CCFF-4677-B14C-1A700CD81FDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StabilityMatrix.Core", "StabilityMatrix.Core\StabilityMatrix.Core.csproj", "{E2E0B158-26D2-48EB-84E3-C5559D9AE84C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StabilityMatrix.Core", "StabilityMatrix.Core\StabilityMatrix.Core.csproj", "{E2E0B158-26D2-48EB-84E3-C5559D9AE84C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StabilityMatrix.Avalonia", "StabilityMatrix.Avalonia\StabilityMatrix.Avalonia.csproj", "{3F9F96FA-12E7-4B82-BFE5-1FAD88F3ACB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StabilityMatrix.Avalonia", "StabilityMatrix.Avalonia\StabilityMatrix.Avalonia.csproj", "{3F9F96FA-12E7-4B82-BFE5-1FAD88F3ACB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StabilityMatrix.Avalonia.Diagnostics", "StabilityMatrix.Avalonia.Diagnostics\StabilityMatrix.Avalonia.Diagnostics.csproj", "{6D088B89-12D4-4EA0-BA6B-305C7D10C084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StabilityMatrix.Avalonia.Diagnostics", "StabilityMatrix.Avalonia.Diagnostics\StabilityMatrix.Avalonia.Diagnostics.csproj", "{6D088B89-12D4-4EA0-BA6B-305C7D10C084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StabilityMatrix.UITests", "StabilityMatrix.UITests\StabilityMatrix.UITests.csproj", "{8C7EDDD1-7FC1-4A15-B379-910A8DA7BCA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StabilityMatrix.UITests", "StabilityMatrix.UITests\StabilityMatrix.UITests.csproj", "{8C7EDDD1-7FC1-4A15-B379-910A8DA7BCA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Gif", "Avalonia.Gif\Avalonia.Gif.csproj", "{72A73F1E-024B-4A25-AD34-626198D9527F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Gif", "Avalonia.Gif\Avalonia.Gif.csproj", "{72A73F1E-024B-4A25-AD34-626198D9527F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands", "Commands\Commands.csproj", "{DFC136B5-2449-4FBE-A724-7F1A60F26802}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7CA2E862-B121-495D-8CCC-2D6EF56A3312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CA2E862-B121-495D-8CCC-2D6EF56A3312}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63EF4330-CCFF-4677-B14C-1A700CD81FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63EF4330-CCFF-4677-B14C-1A700CD81FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63EF4330-CCFF-4677-B14C-1A700CD81FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +47,10 @@ Global
 		{72A73F1E-024B-4A25-AD34-626198D9527F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A73F1E-024B-4A25-AD34-626198D9527F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A73F1E-024B-4A25-AD34-626198D9527F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFC136B5-2449-4FBE-A724-7F1A60F26802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFC136B5-2449-4FBE-A724-7F1A60F26802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFC136B5-2449-4FBE-A724-7F1A60F26802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFC136B5-2449-4FBE-A724-7F1A60F26802}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

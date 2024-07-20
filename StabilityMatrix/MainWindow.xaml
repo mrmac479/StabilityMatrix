@@ -101,6 +101,10 @@
                         Icon="{ui:SymbolIcon Image24}"
                         TargetPageType="{x:Type local:TextToImagePage}"
                         Visibility="{Binding IsTextToImagePageEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <ui:NavigationViewItem
+                        Content="Tools"
+                        Icon="{ui:SymbolIcon BrainCircuit24}"
+                        TargetPageType="{x:Type local:ToolsPage}" />
                 </ui:NavigationView.MenuItems>
                 <ui:NavigationView.FooterMenuItems>
                     <!--  Footer menus  -->

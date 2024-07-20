@@ -37,7 +37,7 @@
     
     <ItemGroup>
         <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.2.1" />
-        <PackageReference Include="AutoComplete.Net" Version="1.2211.2014.42"/>
+        <PackageReference Include="AutoComplete.Net" Version="1.2211.2014.42" />
         <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
         <PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="$(AvaloniaVersion)" />
@@ -131,7 +131,7 @@
     <ItemGroup>
         <AvaloniaResource Include="Assets\brands-*.png" />
         <AvaloniaResource Include="Assets\brands-*.svg" />
-        <AvaloniaResource Include="Assets\guide-*.webp"/>
+        <AvaloniaResource Include="Assets\guide-*.webp" />
     </ItemGroup>
 
     <ItemGroup>
@@ -190,6 +190,9 @@
         <DependentUpon>NewPackageManagerPage.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\ComfyOrchastrationPage.axaml.cs">
+        <DependentUpon>ComfyOrchastrationPage.axaml</DependentUpon>
+      </Compile>
       <Compile Update="Views\PackageManager\PackageInstallDetailView.axaml.cs">
         <DependentUpon>PackageInstallDetailView.axaml</DependentUpon>
         <SubType>Code</SubType>
@@ -201,11 +204,18 @@
       <Compile Update="Models\OpenArtMetadata.cs">
         <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
       </Compile>
+      <Compile Update="Views\ToolsPage.axaml.cs">
+        <DependentUpon>ToolsPage.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="ViewModels\Tools\" />
     </ItemGroup>
 
     <!-- set HUSKY to 0 to disable, or opt-in during CI by setting HUSKY to 1 -->
     <Target Name="husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' == 1 Or ('$(HUSKY)' != 0 And '$(CI)' != 'true')">
-        <Exec Command="dotnet tool restore"  StandardOutputImportance="Low" StandardErrorImportance="High"/>
+        <Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" />
         <Exec Command="dotnet husky install" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../" />
     </Target>
 </Project>

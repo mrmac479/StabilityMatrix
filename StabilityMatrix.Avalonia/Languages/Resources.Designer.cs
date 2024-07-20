@@ -1894,7 +1894,18 @@ namespace StabilityMatrix.Avalonia.Languages {
                 return ResourceManager.GetString("Label_OpenArtBrowser", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Comfy Orchastration.
+        /// </summary>
+        public static string Label_ComfyOrchastration
+        {
+            get
+            {
+                return ResourceManager.GetString("Label_ComfyOrchastration", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Output Folder.
         /// </summary>
